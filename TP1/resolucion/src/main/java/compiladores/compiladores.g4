@@ -1,45 +1,4 @@
-grammar compiladores;
-
-@header {
-package compiladores;
-}
-
-fragment LETRA : [A-Za-z] ;
-fragment DIGITO : [0-9] ;
-
-PYC : ';' ;
-PA  : '(' ;
-PC  : ')' ;
-LLA : '{' ;
-LLC : '}' ;
-ASIGN : '=' ;
-COMA  : ',' ;
-SUMA  : '+' ;
-RESTA : '-' ;
-MULT  : '*' ;
-DIV   : '/' ;
-MOD   : '%' ;
-EQ : '==' ;
-NEQ : '!=' ;
-LTE : '<=' ;
-GTE : '>=' ;
-LT  : '<' ;
-GT  : '>' ;
-IF  : 'if' ;
-ELSE: 'else' ;
-FOR : 'for' ;
-WHILE: 'while' ;
-RETURN: 'return' ;
-
-NUMERO : DIGITO+ ;
-// OTRO : . ;
-
-INT : 'int' ;
-VOID: 'void' ;
-
-ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
-
-WS : [ \t\n\r] -> skip ;
+grammar Compiladores;
 
 programa : instrucciones EOF ;
 
@@ -61,7 +20,7 @@ bloque : LLA instrucciones LLC ;
 asignacion : ID ASIGN expresion PYC;
 
 declaracion : tipo ID inicializacion listaid PYC
-            | tipo ID PA argumentos PC bloque  // Declaración de función
+            | tipo ID PA argumentos PC bloque
             ;
 
 tipo : INT
@@ -114,5 +73,38 @@ termino_aux : (MULT | DIV | MOD) factor termino_aux
 
 factor : NUMERO
        | ID
-       | PA expresion PC 
+       | PA expresion PC
        ;
+
+// Tokens
+PYC : ';' ;
+PA  : '(' ;
+PC  : ')' ;
+LLA : '{' ;
+LLC : '}' ;
+ASIGN : '=' ;
+COMA  : ',' ;
+SUMA  : '+' ;
+RESTA : '-' ;
+MULT  : '*' ;
+DIV   : '/' ;
+MOD   : '%' ;
+EQ : '==' ;
+NEQ : '!=' ;
+LTE : '<=' ;
+GTE : '>=' ;
+LT  : '<' ;
+GT  : '>' ;
+IF  : 'if' ;
+ELSE: 'else' ;
+FOR : 'for' ;
+WHILE: 'while' ;
+RETURN: 'return' ;
+NUMERO : DIGITO+ ;
+INT : 'int' ;
+VOID: 'void' ;
+ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
+WS : [ \t\n\r] -> skip ;
+
+fragment LETRA : [A-Za-z] ;
+fragment DIGITO : [0-9] ;
