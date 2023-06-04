@@ -22,27 +22,20 @@ MOD   : '%' ;
 EQ : '==' ;
 
 NUMERO : DIGITO+ ;
-// OTRO : . ;
-
 INT : 'int' ;
-
 ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 
 WS : [ \t\n\r] -> skip ;
 
-// s : ID     { System.out.println("ID ->" + $ID.getText() + "<--"); }         s
-//   | NUMERO { System.out.println("NUMERO ->" + $NUMERO.getText() + "<--"); } s
-//   | OTRO   { System.out.println("Otro ->" + $OTRO.getText() + "<--"); }     s
-//   | EOF
-//   ;
+errorSintactico: 'Falta de un punto y coma'
+               | 'Falta de apertura de paréntesis'
+               | 'Formato incorrecto en lista de declaración de variables';
 
-// si : s
-//    | EOF
-//    ;
-
-// s : PA s PC s
-//   |
-//   ;
+errorSemantico: 'Doble declaración del mismo identificador'
+              | 'Uso de un identificador no declarado'
+              | 'Uso de un identificador sin inicializar'
+              | 'Identificador declarado pero no usado'
+              | 'Tipos de datos incompatibles';
 
 programa : instrucciones EOF ;
 
@@ -69,8 +62,6 @@ listaid : COMA ID inicializacion listaid
         |
         ;
 
-// X = ( 3 + 5 ) / 4; // ID ASSIGN expresion PYC
-
 expresion : termino exp ;
 
 exp : SUMA  termino exp
@@ -89,4 +80,4 @@ term : MULT factor term
 factor : NUMERO
        | ID
        | PA expresion PC 
-       ;
+       ; 
