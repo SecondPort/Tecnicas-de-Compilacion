@@ -1,9 +1,13 @@
 grammar Compiladores;
 
+@header {
+package compiladores;
+}
+
 programa : instrucciones EOF ;
 
 instrucciones : instruccion instrucciones
-              |
+              | instruccion
               ;
 
 instruccion : asignacion
@@ -32,7 +36,7 @@ inicializacion : ASIGN expresion
                ;
 
 listaid : COMA ID inicializacion listaid
-        |
+        | COMA ID inicializacion
         ;
 
 condicion : IF PA condicion_expr PC bloque (ELSE bloque)?
@@ -57,7 +61,7 @@ retorno : RETURN expresion?
 expresion : condicion_expr
           | termino expresion_aux ;  
 
-condicion_expr : expresion (EQ | NEQ | LTE | GTE | LT | GT) expresion
+condicion_expr : termino (EQ | NEQ | LTE | GTE | LT | GT) termino
                | termino
                ;
 
@@ -95,6 +99,7 @@ LTE : '<=' ;
 GTE : '>=' ;
 LT  : '<' ;
 GT  : '>' ;
+ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 IF  : 'if' ;
 ELSE: 'else' ;
 FOR : 'for' ;
@@ -103,8 +108,7 @@ RETURN: 'return' ;
 NUMERO : DIGITO+ ;
 INT : 'int' ;
 VOID: 'void' ;
-ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 WS : [ \t\n\r] -> skip ;
 
 fragment LETRA : [A-Za-z] ;
-fragment DIGITO : [0-9] ;
+fragment DIGITO : [0-9] ;
